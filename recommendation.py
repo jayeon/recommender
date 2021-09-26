@@ -93,3 +93,4 @@ else:
 
 for i, item in enumerate(chosen_items):
     st.write(f'{i}. {item}')
+    st.write(':cake:')
