@@ -53,27 +53,17 @@ item = st.sidebar.selectbox("Select an item for a recommendation.", tuple(common
 method = st.sidebar.selectbox("Select a method.", tuple(methods))
 
 def content_based(item):
-    doc = nlp(item)
-    nouns = []
-    proper_nouns = [] #backup
-    for token in doc:
-    pos = token.pos_
-    if pos == 'NOUN':
-      nouns.append(token.text)
-    elif pos == 'PROPN':
-      proper_nouns.append(token.text)
-    else:
-      pass
-    if len(nouns) == 0:
-    nouns += proper_nouns
-
-    keyword = ''.join([f'{noun}|' for noun in nouns])[:-1]
-    is_match = df_unique['Description'].str.contains(keyword, na=False)
-    results = df_unique[is_match].iloc[1:6]
+    results = []
     return results
 
 def collaborative(item):
-    return item
+    also_purchased = df[df['Description'] == item]['InvoiceNo'] 
+    #identifies orders where the item was purchased
+    df_recommend = df[df['InvoiceNo'].isin(also_purchased)]
+
+    popular_items = df_recommend['Description'].value_counts().keys()[1:6]
+    # identify most frequently purchased items
+    return popular_items
 
 st.write(f'Great choice! Here are our recommendations based on {item}')
 if method == 'content-based':
