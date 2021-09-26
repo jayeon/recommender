@@ -46,3 +46,5 @@ df_unique = pd.DataFrame(df['Description'].unique(), columns=['Description'])
 
 item = st.sidebar.selectbox("Select an item for a recommendation.", tuple(common_items))
 method = st.sidebar.selectbox("Select a method.", tuple("content-based", "collaborative"))
+
+st.write(f'Great choice! Here are our recommendations based on {item}')
