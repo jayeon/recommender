@@ -3,6 +3,8 @@ import pandas as pd
 import spacy
 import streamlit as st
 
+python -m spacy download en
+
 st.title('Recommendation system')
 st.subheader('The recommendation system identifies similar items based on multiple approaches')
 
