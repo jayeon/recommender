@@ -58,6 +58,7 @@ def content_based(item):
     doc = nlp(item)
     nouns = []
     proper_nouns = [] #backup
+
     for token in doc:
         pos = token.pos_
         if pos == 'NOUN':
@@ -66,14 +67,14 @@ def content_based(item):
           proper_nouns.append(token.text)
         else:
           pass
-          
+
     if len(nouns) == 0:
-        nouns += proper_nouns
+        nouns += proper_nouns # use other proper nouns if nouns are not detected
     keyword = ''.join([f'{noun}|' for noun in nouns])[:-1]
     is_match = df_unique['Description'].str.contains(keyword, na=False)
     results = df_unique[is_match].iloc[1:6]
 
-    return results
+    return results['Description']
 
 def collaborative(item):
     also_purchased = df[df['Description'] == item]['InvoiceNo'] 
