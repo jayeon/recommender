@@ -70,4 +70,5 @@ if method == 'content-based':
     chosen_items = content_based(item)
 else:
     chosen_items = collaborative(item)
-st.write(item)
+    
+st.write(chosen_items)
