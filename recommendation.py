@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import spacy
+import streamlit as st
 
 st.title('Customer support simulation with SimPy')
 st.subheader('The recommendation system identifies similar items based on multiple approaches')
