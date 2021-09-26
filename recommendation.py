@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import spacy
 import streamlit as st
+import en_core_web_sm
 
 #python -m spacy download en
 
@@ -14,7 +15,7 @@ file = 'data.csv'
 df_columns = ['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
        'UnitPrice', 'CustomerID', 'Country']
 df = pd.read_csv(file, usecols=df_columns, encoding='latin1')
-#nlp = spacy.load("en_core_web_sm")
+nlp = en_core_web_sm.load()
 
 #data cleaning
 df['InvoiceDay'] = pd.to_datetime(df['InvoiceDate']).dt.to_period('D') # convert all the dates to year-month-day format
