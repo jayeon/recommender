@@ -59,17 +59,16 @@ def content_based(item):
     nouns = []
     proper_nouns = [] #backup
     for token in doc:
-    pos = token.pos_
-    
-    if pos == 'NOUN':
-      nouns.append(token.text)
-    elif pos == 'PROPN':
-      proper_nouns.append(token.text)
-    else:
-      pass
+        pos = token.pos_
+        if pos == 'NOUN':
+          nouns.append(token.text)
+        elif pos == 'PROPN':
+          proper_nouns.append(token.text)
+        else:
+          pass
+          
     if len(nouns) == 0:
-    nouns += proper_nouns
-
+        nouns += proper_nouns
     keyword = ''.join([f'{noun}|' for noun in nouns])[:-1]
     is_match = df_unique['Description'].str.contains(keyword, na=False)
     results = df_unique[is_match].iloc[1:6]
