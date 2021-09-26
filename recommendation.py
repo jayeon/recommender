@@ -3,7 +3,7 @@ import pandas as pd
 import spacy
 import streamlit as st
 
-python -m spacy download en
+#python -m spacy download en
 
 st.title('Recommendation system')
 st.subheader('The recommendation system identifies similar items based on multiple approaches')
@@ -12,7 +12,7 @@ file = 'data.csv'
 df_columns = ['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
        'UnitPrice', 'CustomerID', 'Country']
 df = pd.read_csv(file, usecols=df_columns, encoding='latin1')
-nlp = spacy.load("en_core_web_sm")
+#nlp = spacy.load("en_core_web_sm")
 
 #data cleaning
 df['InvoiceDay'] = pd.to_datetime(df['InvoiceDate']).dt.to_period('D') # convert all the dates to year-month-day format
