@@ -45,14 +45,39 @@ purchased_only_once = item_by_popularity[item_by_popularity == 1].index
 df = df[~df['Description'].isin(purchased_only_once)]
 
 common_items = df['Description'].value_counts().keys()[:15]
+methods = ["content-based", "collaborative"]
+
 df_unique = pd.DataFrame(df['Description'].unique(), columns=['Description'])
 
 item = st.sidebar.selectbox("Select an item for a recommendation.", tuple(common_items))
-method = st.sidebar.selectbox("Select a method.", tuple("content-based", "collaborative"))
+method = st.sidebar.selectbox("Select a method.", tuple(methods))
 
 def content_based(item):
+    doc = nlp(item)
+    nouns = []
+    proper_nouns = [] #backup
+    for token in doc:
+    pos = token.pos_
+    if pos == 'NOUN':
+      nouns.append(token.text)
+    elif pos == 'PROPN':
+      proper_nouns.append(token.text)
+    else:
+      pass
+    if len(nouns) == 0:
+    nouns += proper_nouns
+
+    keyword = ''.join([f'{noun}|' for noun in nouns])[:-1]
+    is_match = df_unique['Description'].str.contains(keyword, na=False)
+    results = df_unique[is_match].iloc[1:6]
+    return results
+
+def collaborative(item):
     return item
 
 st.write(f'Great choice! Here are our recommendations based on {item}')
 if method == 'content-based':
-    st.write(item)
+    chosen_items = content_based(item)
+else:
+    chosen_items = collaborative(item)
+st.write(item)
