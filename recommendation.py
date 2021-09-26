@@ -6,7 +6,9 @@ import streamlit as st
 #python -m spacy download en
 
 st.title('Recommendation system')
-st.subheader('The recommendation system identifies similar items based on multiple approaches')
+st.subheader('The recommendation system identifies top 5 matches based on the item chosen by the customer.')
+st.write('The recommendation system was implemented using two common approaches: content-based and collaborative.')
+
 
 file = 'data.csv'
 df_columns = ['InvoiceNo', 'StockCode', 'Description', 'Quantity', 'InvoiceDate',
@@ -51,6 +53,7 @@ df_unique = pd.DataFrame(df['Description'].unique(), columns=['Description'])
 
 item = st.sidebar.selectbox("Select an item for a recommendation.", tuple(common_items))
 method = st.sidebar.selectbox("Select a method.", tuple(methods))
+st.sidebar.write('Project by Jayeon Kim')
 
 def content_based(item):
     results = []
@@ -70,5 +73,6 @@ if method == 'content-based':
     chosen_items = content_based(item)
 else:
     chosen_items = collaborative(item)
-    
-st.write(chosen_items)
+
+for i, item in enumerate(chosen_items):
+    st.write(f'{i}. {item}')
