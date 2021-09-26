@@ -91,6 +91,6 @@ if method == 'content-based':
 else:
     chosen_items = collaborative(item)
 
-for i, item in enumerate(chosen_items):
-    st.write(f'{i}. {item}')
-    st.write(':cake:')
+for item in chosen_items:
+    # emoji = [f':{word.lower()}' for word in item]
+    st.write(f'💡. {item}')
