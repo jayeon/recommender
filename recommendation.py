@@ -55,7 +55,13 @@ method = st.sidebar.selectbox("Select a method.", tuple(methods))
 st.sidebar.write('Project by Jayeon Kim')
 
 def content_based(item):
-    results = []
+    also_purchased = df[df['Description'] == item]['InvoiceNo'] 
+    #identifies orders where the item was purchased
+    df_recommend = df[df['InvoiceNo'].isin(also_purchased)]
+
+    popular_items = df_recommend['Description'].value_counts().keys()[1:6]
+    # identify most frequently purchased items
+
     return results
 
 def collaborative(item):
